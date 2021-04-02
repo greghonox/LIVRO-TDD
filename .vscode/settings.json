@@ -1,0 +1,14 @@
+{
+    "python.pythonPath": "/home/gregorio/.virtualenvs/django_tdd/bin/python",
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "${workspaceFolder}/Tests",
+        "-p",
+        "*_test.py"
+    ],
+    
+    "python.testing.pytestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.unittestEnabled": true
+}
