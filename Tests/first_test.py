@@ -9,7 +9,7 @@ class Test_tdd(TestCase):
         'HISTORIA DO USUARIO'
         
         self.dr.get('http://localhost:8000')
-        self.assertIn('Django', self.dr.title)
+        self.assertIn('To-Do list', self.dr.title)
         
     def tearDown(self) -> None:
         self.dr.quit()
