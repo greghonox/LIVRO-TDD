@@ -17,25 +17,21 @@ class Test_tdd(TestCase):
         head_text = self.dr.find_element_by_tag_name('h1').text
         self.assertIn('To-Do', head_text)
         
+        txt = 'Buy peacock feathers'
+        
         inputbox = self.dr.find_element_by_id('id_new_item')
         self.assertEqual(inputbox.get_attribute('placeholder'),
                          'Enter a to-do item')
-        inputbox.send_keys('Buy peacock feathers')
+        inputbox.send_keys(txt)
         inputbox.send_keys('\n')
+        
+        print('ESPERANDO PARA SEGUIR O TESTE')
         sleep(5)
         
         table = self.dr.find_element_by_id('id_list_table')
-        self.assertTrue(
-            any(x.text == '1: Buy peacock feathers' for x in table)
-        )
-        self.fail('Finish tests')
-    
-    def test_home_page_returns_correct_html(self):
-        request = HttpResponse()
-        response = home_page(request)
-        html = response.content.decode('utf-8')
-        expected_html = render_to_string('home.html')        
-        self.assertEqual(html, expected_html)
-        
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn('1: ' + txt, [row.text for row in rows])
+        # self.fail('Finish tests')
+  
     def tearDown(self) -> None:
         self.dr.quit()
