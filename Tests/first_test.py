@@ -7,6 +7,11 @@ from django.http import HttpResponse
 class Test_tdd(TestCase):
     def setUp(self) -> None:
         self.dr = webdriver.Chrome()
+        
+    def check_for_row_in_list_table(self, raw_text):
+        table = self.dr.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(raw_text, [row.text for row in rows])
     
     def test_title(self) -> None:
         'HISTORIA DO USUARIO'
@@ -27,6 +32,8 @@ class Test_tdd(TestCase):
         
         print('ESPERANDO PARA SEGUIR O TESTE')
         sleep(5)
+        self.check_for_row_in_list_table('1: Buy peacock feathers')
+        
         
         table = self.dr.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
