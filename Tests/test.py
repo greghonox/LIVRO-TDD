@@ -1,22 +1,21 @@
 from time import sleep
 from unittest import TestCase
 from selenium import webdriver
-from django.http import HttpResponse
+from django.test import LiveServerTestCase
 
-
-class Test_tdd(TestCase):
+class Test_tdd(LiveServerTestCase):
     def setUp(self) -> None:
         self.dr = webdriver.Chrome()
         
     def check_for_row_in_list_table(self, raw_text):
         table = self.dr.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertIn(raw_text, [row.text for row in rows])
+        self.assertIn(raw_text, [row.text.split(':')[-1].strip() for row in rows])
     
     def test_title(self) -> None:
         'HISTORIA DO USUARIO'
         
-        self.dr.get('http://localhost:8000')
+        self.dr.get(self.live_server_url)
         self.assertIn('To-Do list', self.dr.title)
         
         head_text = self.dr.find_element_by_tag_name('h1').text
@@ -32,12 +31,8 @@ class Test_tdd(TestCase):
         
         print('ESPERANDO PARA SEGUIR O TESTE')
         sleep(5)
-        self.check_for_row_in_list_table('1: Buy peacock feathers')
-        
-        
-        table = self.dr.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1: ' + txt, [row.text for row in rows])
+        self.check_for_row_in_list_table(txt)
+
         # self.fail('Finish tests')
   
     def tearDown(self) -> None:
