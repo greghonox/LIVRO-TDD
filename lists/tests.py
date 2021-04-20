@@ -48,14 +48,16 @@ class HomePageTest(TestCase):
         txt = 'A new list item'
         response = self.client.post('/', data={'item_text': txt})
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['location'], '/')
+        self.assertEqual(response['location'], '/lists/the-only-list-in-the-wold/')
     
-    def test_display_all_list_items(self):
+
+class ListViewTest(TestCase):
+    def test_display_all_items(self):
         Item.objects.create(text='itemey 1')
         Item.objects.create(text='itemey 2')
         
-        response = self.client.get('/')
+        response = self.client.get('/lists/the-only-list-in-the-wold/')
         
-        self.assertIn('itemey 1', response.content.decode())
-        self.assertIn('itemey 2', response.content.decode())
+        self.assertContains(response, 'itemey 1')
+        self.assertContains(response, 'itemey 2')
         

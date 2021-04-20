@@ -11,6 +11,7 @@ class Test_tdd(LiveServerTestCase):
         self.dr = webdriver.Chrome()
         
     def test_can_start_a_list_for_one_user(self):
+        self.dr.get(self.live_server_url)
         self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
         self.wait_for_row_in_list_table('1: Buy peacock feathers to make a fly')
     
