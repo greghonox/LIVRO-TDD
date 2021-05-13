@@ -30,7 +30,7 @@ class Test_tdd(LiveServerTestCase):
         inputbox = self.dr.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy milk')
         inputbox.send_keys('\n')
-        self.wait_for_row_in_list_table('2: Buy milk')
+        self.wait_for_row_in_list_table('1: Buy milk')
         
 
         francs_list_url = self.dr.current_url
@@ -38,7 +38,7 @@ class Test_tdd(LiveServerTestCase):
         self.assertNotEqual(francs_list_url, edith_list_url)
         
         page_text = self.dr.find_element_by_tag_name('body').text
-        self.assertIn('2: Buy milk', page_text)
+        self.assertIn('1: Buy milk', page_text)
         
     def check_for_row_in_list_table(self, raw_text):
         table = self.dr.find_element_by_id('id_list_table')
